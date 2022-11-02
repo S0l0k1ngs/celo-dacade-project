@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <!-- needed for the icons -->
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <!-- gets the CDN version of a minified materialize css -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    </head>
+
+    <body>
+        <div class="navbar-fixed pink lighten-1">
+            <ul id="dropdown1" class="dropdown-content">                
+                <li> <span class="center" id="walletBalance"> ⌛ Loading Balance ⌛ </span></li>
+                <li> <a class="center modal-trigger" id="edit" href="#details"> Edit Details </a></li>
+            </ul>
+            <nav>
+                <div class=" nav-wrapper pink lighten-1">
+                    <a href="#!" class="brand-logo">Trip Advisor</a>
+                    <a href="#" data-target="responsive-nav" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+                    <ul class="right hide-on-med-and-down">
+                        <li><a class="white-text red  btn-flat modal-trigger" id="signup" data-target="adviser"> Become a Trip Advisor</a></li>                      
+                        <li><a class="dropdown-trigger" href="#!" data-target="dropdown1" id="walletAddress"> ⌛ Loading Address ⌛ <i class="material-icons right">arrow_drop_down</i></a></li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+
+        <ul class="sidenav" id="responsive-nav">
+            <li class="container">Sign up as a advisor</li>
+            <li class="container truncate" id="MobileBalance"> ⌛ Loading Address ⌛ </li>
+        </ul>
+
+        <div class="alert">
+            <h1 class="center" id="notify"></h1>
+        </div>
+
+        <div id="adviser" class="modal modal-fixed-footer">
+            <div class="modal-content container">
+                <div class="row">
+                    <div class="input-field col s12 m8 offset-m2">
+                        <input placeholder="Email address" id="email" type="text" class="validate">
+                        <label for="email"> Email</label>
+                    </div>
+                    <div class="input-field col s12 m8 offset-m2">
+                        <input placeholder="Image Link" id="imageurl" type="text" class="validate">
+                        <label for="imageurl"> Image url</label>
+                    </div>
+                    <div class="input-field col s12 m8 offset-m2">
+                        <input placeholder="Location of trip" id="Location" type="text" class="validate">
+                        <label for="Location"> Location</label>
+                    </div>
+                    <div class="input-field col s12 m8 offset-m2">
+                        <input placeholder="Activities eg beach | cinema | dates" id="feature" type="text" class="validate">
+                        <label for="feature"> Feature</label>
+                    </div>
+                    <div class="input-field col s12 m8 offset-m2">
+                        <input placeholder="How many days will this last" id="duration" type="number" class="validate">
+                        <label for="duration"> Duration</label>
+                    </div>
+                    <div class="input-field col s12 m8 offset-m2">
+                        <input placeholder="Cost of the trip" id="price" type="number" class="validate">
+                        <label for="price"> Price</label>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <a class="white-text btn-flat teal" id="add_Advisor">Sign Up</a>
+                <a class="white-text btn-flat red modal-close">EXIT</a>
+            </div>
+        </div>
+
+        <div id="details" class="modal modal-fixed-footer">
+            <div class="modal-content container">
+                <div class="row">
+                    <h5 class="center">Edit Your Details</h5><hr>
+                    <div class="input-field col s12 m8 offset-m2">
+                        <input placeholder="Email address" id="Edit_email" type="text" class="validate">
+                        <label for="email"> Email</label>
+                    </div>
+                    <div class="input-field col s12 m8 offset-m2">
+                        <input placeholder="Image Link" id="Edit_imageurl" type="text" class="validate">
+                        <label for="imageurl"> Image url</label>
+                    </div>
+                    <div class="input-field col s12 m8 offset-m2">
+                        <input placeholder="Location of trip" id="Edit_Location" type="text" class="validate">
+                        <label for="Location"> Location</label>
+                    </div>
+                    <div class="input-field col s12 m8 offset-m2">
+                        <input placeholder="Activities eg beach | cinema | dates" id="Edit_feature" type="text" class="validate">
+                        <label for="feature"> Feature</label>
+                    </div>
+                    <div class="input-field col s12 m8 offset-m2">
+                        <input placeholder="How many days will this last" id="Edit_duration" type="number" class="validate">
+                        <label for="duration"> Duration</label>
+                    </div>
+                    <div class="input-field col s12 m8 offset-m2">
+                        <input placeholder="Cost of the trip" id="Edit_price" type="number" class="validate">
+                        <label for="price"> Price</label>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <a class="white-text btn-flat teal" id="edit_Details">Submit</a>
+                <a class="white-text btn-flat red modal-close">EXIT</a>
+            </div>
+        </div>
+
+            <div id="paying" class="modal">
+                <div class="modal-content container">
+                    <div class="row">
+                        <h5 class="center">START DATE OF THE TRIP</h5>
+                        <div class="input-field col s12 m8 offset-m2">
+                            <input placeholder="start date of the trip" id="startDate" type="datetime-local" class="validate">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                <a class="white-text btn-flat teal" id="payer">Book</a>
+                <a class="white-text btn-flat red modal-close">EXIT</a>
+                </div>
+            </div>
+
+            <div id="reporting" class="modal">
+
+                <div class="modal-content container">
+                    <div class="row">
+                        <h5 class="center"> Report Account</h5>
+                        <div class="input-field col s12 m8 offset-m2">
+                            <textarea id="reason" class="materialize-textarea"></textarea>
+                            <label for="textarea1">Reason for reporting this account</label>
+                            <!-- <input type="text" placeholder="Reason for reporting the account" id="feedback" class="validate"> -->
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <a class="white-text btn-flat teal" id="sendReport"> SUBMIT</a>
+                    <a class="white-text btn-flat red modal-close"> CLOSE</a>
+                </div>
+
+            </div>
+
+
+            <div class="container">
+                <div class="row" id="tripadvisors">
+                </div>
+            </div>
+            
+
+        </div>
+        
+
+    </body>
+
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script src="https://unpkg.com/ethereum-blockies@0.1.1/blockies.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $('.sidenav').sidenav();
+            $('.modal').modal();
+            $(".dropdown-trigger").dropdown();
+        })
+    </script>
+</html>
