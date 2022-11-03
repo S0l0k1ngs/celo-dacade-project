@@ -57,6 +57,10 @@ contract HoneyMoonTripAdvisor {
     //total complaints
     uint totalComplains = 0;
 
+    // An unsigned integer variable to keep track of how many Advisors we have currently.
+    uint internal totalAdvisor = 0;
+
+
     //A map function to keep details of previous booking between an advisor and a booker containing start and end date
     // mapping(address => BookingDetails) public bookingDetails;
 
@@ -82,16 +86,13 @@ contract HoneyMoonTripAdvisor {
 
 
 
-    // An unsigned integer variable to keep track of how many Advisors we have currently.
-    uint internal totalAdvisor = 0;
 
     constructor () {
         admin = (msg.sender);
     }
 
-    modifier verifyAddress(){
-        //The require function to make sure that an address does not create more than one account
-        require(isAdvisor[msg.sender] == false, "This address is already an advisor");
+    modifier onlyAdmin(){
+        require(msg.sender == admin, "Only Admin");
         _;
     }
 
@@ -152,8 +153,9 @@ contract HoneyMoonTripAdvisor {
         uint _duration,
         uint _price
     )
-    public verifyAddress 
+    public 
     {
+        require(isAdvisor[msg.sender] == false, "This address is already an advisor");
         receptionstaff[totalAdvisor] = ReceptionStaff(
             payable(msg.sender),
             _email,
@@ -182,8 +184,7 @@ contract HoneyMoonTripAdvisor {
 
     function banAdvisor (
         address _advisorAddress
-    ) public  {
-        require((msg.sender)==admin, "only the admin has the right to ban a tripadvisor");
+    ) public  onlyAdmin{
         uint advisorIndex = advisorLocation[_advisorAddress];
         (receptionstaff[advisorIndex].isBanned) = true;
     }
@@ -191,23 +192,18 @@ contract HoneyMoonTripAdvisor {
 
     function removeBan (
         address _advisorAddress
-    ) public  {
-        require((msg.sender)==admin, "only the admin has the right to ban a tripadvisor");
+    ) public  onlyAdmin{
         uint advisorIndex = advisorLocation[_advisorAddress];
         (receptionstaff[advisorIndex].isBanned) = false;
     }
 
-
-
-
-
     function bookTripWithAdvisor( address _advisorAddress, uint _startDate) public  returns(address booker, address tripAdvisor, uint StartPeriod, uint EndDate){
         uint starter = _startDate;
+        require(!isAdvisor[msg.sender], "Advisor can't book");
         require(_startDate > (block.timestamp), "This date has either passed or is too close");
         require((isBooked[_advisorAddress]) < starter, "He is all booked up");
         uint advisorIndexZ = (advisorLocation[_advisorAddress]);
-        bool status = (receptionstaff[advisorIndexZ].isBanned);
-        require(!status, "This Tripadvisor has been banned from the platform");
+        require(!receptionstaff[advisorIndexZ].isBanned, "This Tripadvisor has been banned from the platform");
         uint advPrice = (receptionstaff[advisorIndexZ].price);
         require(
             IERC20Token(cUsdTokenAddress).transferFrom(
@@ -221,12 +217,6 @@ contract HoneyMoonTripAdvisor {
         uint _duration  = receptionstaff[advisorIndex].duration;
         uint _endDate = _startDate + _duration;
         isBooked[_advisorAddress] = _endDate;
-        // bookingDetails[_advisorAddress] = BookingDetails(
-        //     (msg.sender),
-        //     _startDate,
-        //     _endDate
-        // );
-
         return (
             (msg.sender),
             _advisorAddress,
