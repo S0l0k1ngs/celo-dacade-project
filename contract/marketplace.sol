@@ -97,6 +97,15 @@ contract HoneyMoonTripAdvisor {
     }
 
 
+    /** 
+    @dev modifier to check that the address is an adviser address before banning and removing ban
+    */
+    modifier isNotAdvisor(address _advisor){
+        require(isAdvisor[_advisor], "You can't ban someone who is not an advisor");
+        _;
+    }
+
+
     // A function to add complaints but only if you have booked the trip advisor before
     // We dont want to have just anyone complain without just cause
     function sendComplaint(string memory _reason, address _tripadvisor) public returns(uint) {
@@ -122,6 +131,9 @@ contract HoneyMoonTripAdvisor {
 
     } 
 
+    /**
+    @notice Function to edit details of an adviser
+    */
     function editDetails(
         string memory _email,
         string memory _imagelink,
@@ -184,7 +196,7 @@ contract HoneyMoonTripAdvisor {
 
     function banAdvisor (
         address _advisorAddress
-    ) public  onlyAdmin{
+    ) public  onlyAdmin isNotAdvisor(_advisorAddress){
         uint advisorIndex = advisorLocation[_advisorAddress];
         (receptionstaff[advisorIndex].isBanned) = true;
     }
@@ -192,7 +204,7 @@ contract HoneyMoonTripAdvisor {
 
     function removeBan (
         address _advisorAddress
-    ) public  onlyAdmin{
+    ) public  onlyAdmin isNotAdvisor(_advisorAddress){
         uint advisorIndex = advisorLocation[_advisorAddress];
         (receptionstaff[advisorIndex].isBanned) = false;
     }
